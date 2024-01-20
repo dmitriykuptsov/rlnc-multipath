@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (b8e25be8, 2022-02-05)"
+   sodipodi:docname="reg_packet.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.48106061"
+     inkscape:cx="396"
+     inkscape:cy="561.25984"
+     inkscape:window-width="1312"
+     inkscape:window-height="762"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Слой 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:none;fill-opacity:0.505882;stroke:#0000ff;stroke-width:0.789593;stroke-opacity:1"
+       id="rect846"
+       width="125.02541"
+       height="61.775398"
+       x="37.862297"
+       y="44.462299"
+       ry="0.10763367"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/reg_packet.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <path
+       style="fill:none;stroke:#0000ff;stroke-width:1.065;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 38.499999,59.4 H 161.7"
+       id="path1277"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/reg_packet.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <path
+       style="fill:none;stroke:#0000ff;stroke-width:1.065;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 39.049999,74.8 H 162.25"
+       id="path1413"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/reg_packet.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <path
+       style="fill:none;stroke:#0000ff;stroke-width:1.065;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 39.049999,90.2 H 162.25"
+       id="path1415"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/reg_packet.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <text
+       xml:space="preserve"
+       style="font-size:5.64444px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="92.399994"
+       y="54.450001"
+       id="text1575"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/reg_packet.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400"><tspan
+         sodipodi:role="line"
+         id="tspan1573"
+         style="font-size:5.64444px;stroke-width:0.264583"
+         x="92.399994"
+         y="54.450001">HMAC</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:5.64444px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="92.079163"
+       y="68.75"
+       id="text5556"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/reg_packet.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400"><tspan
+         sodipodi:role="line"
+         id="tspan5554"
+         style="font-size:5.64444px;stroke-width:0.264583"
+         x="92.079163"
+         y="68.75">Nonce</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:5.64444px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="94.599998"
+       y="84.150002"
+       id="text8382"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/reg_packet.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400"><tspan
+         sodipodi:role="line"
+         id="tspan8380"
+         style="font-size:5.64444px;stroke-width:0.264583"
+         x="94.599998"
+         y="84.150002">HIT</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:5.64444px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="86.350006"
+       y="100.65"
+       id="text10552"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/reg_packet.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400"><tspan
+         sodipodi:role="line"
+         id="tspan10550"
+         style="font-size:5.64444px;stroke-width:0.264583"
+         x="86.350006"
+         y="100.65">IP address</tspan></text>
+  </g>
+</svg>

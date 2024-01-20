@@ -1,0 +1,21 @@
+This is BibTeXu: a UTF-8 Big BibTeX version 0.99d
+Implementation:  C for Unix
+Release version: 3.71 (04 mar 2019)
+Compiled with:   ICU version 68.2
+
+The top-level auxiliary file: book.aux
+The style file: abbrv.bst
+I found no \citation commands---while reading file book.aux
+Reallocated glb_str_ptr (elt_size=8) to 10 items from 0.
+Reallocated global_strs (elt_size=200001) to 10 items from 0.
+Reallocated glb_str_end (elt_size=8) to 10 items from 0.
+Database file #1: mybib.bib
+
+Here's how much of BibTeX's memory you used:
+ Cites:                 0 out of 750
+ Fields:             5000 out of 5000
+ Hash table:       199853 out of 200000
+ Strings:             494 out of 200000
+ Free string pool:   3681 out of 65000
+ Wizard functions:   2118 out of 3000
+(There was 1 error message)

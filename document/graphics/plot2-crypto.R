@@ -1,0 +1,13 @@
+d1<-scan("hw-python.txt")
+d2<-scan("python.txt")
+
+pdf("AES.pdf")
+par(mfrow=c(2,1))
+#plot(density(d1), xlim=c(min(d1), max(d2)), col="dark red", lwd=3, main="AES256 encryption: Python+hardware vs pure Python", xlab="Time to encrypt in CBC mode 1024 bytes, ms")
+#lines(density(d2), lwd=3, col="dark blue")
+#legend("topright", c("Python and hardware", "Pure Python"), col=c("dark red", "dark blue"), lwd=3, bg='lightblue')
+hist(d1, col="dark red", breaks=20, main="Python with hardware acceleration", xlim=c(0, max(d2)), xlab="Encryption time, ms")
+grid(lwd=1, col="black", lty=1)
+hist(d2, col="dark blue", breaks=20, main="Pure python implementation", xlim=c(0, max(d2)), xlab="Encryption time, ms")
+grid(lwd=1, col="black", lty=1)
+dev.off()

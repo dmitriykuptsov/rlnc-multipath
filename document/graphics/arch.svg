@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (b8e25be8, 2022-02-05)"
+   sodipodi:docname="arch.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.0275454"
+     inkscape:cx="413.12043"
+     inkscape:cy="192.20562"
+     inkscape:window-width="1312"
+     inkscape:window-height="763"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Слой 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <circle
+       style="fill:#00a9cc;fill-opacity:1;stroke:#000000;stroke-width:1.165;stroke-opacity:1"
+       id="path926"
+       cx="27.368668"
+       cy="37.350182"
+       r="5.4737339"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <circle
+       style="fill:#00a9cc;fill-opacity:1;stroke:#000000;stroke-width:1.165;stroke-opacity:1"
+       id="circle1580"
+       cx="27.368668"
+       cy="56.99123"
+       r="5.4737339"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <rect
+       style="fill:#00a9cc;fill-opacity:1;stroke:#000000;stroke-width:1.165;stroke-opacity:1"
+       id="rect1604"
+       width="39.92606"
+       height="10.625483"
+       x="87.579742"
+       y="8.3715935"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="96.917297"
+       y="14.811279"
+       id="text1894"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400"><tspan
+         sodipodi:role="line"
+         id="tspan1892"
+         style="stroke-width:0.264583"
+         x="96.917297"
+         y="14.811279">Controller</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="84.359901"
+       y="4.8297653"
+       id="text4142"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400"><tspan
+         sodipodi:role="line"
+         id="tspan4140"
+         style="stroke-width:0.264583"
+         x="84.359901"
+         y="4.8297653">HIP-VPLS Secure point</tspan></text>
+    <circle
+       style="fill:#00a9cc;fill-opacity:1;stroke:#000000;stroke-width:1.165;stroke-opacity:1"
+       id="circle4722"
+       cx="188.36084"
+       cy="35.740261"
+       r="5.4737339"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <circle
+       style="fill:#00a9cc;fill-opacity:1;stroke:#000000;stroke-width:1.165;stroke-opacity:1"
+       id="circle4724"
+       cx="188.36084"
+       cy="55.381306"
+       r="5.4737339"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <circle
+       style="fill:#00a9cc;fill-opacity:1;stroke:#000000;stroke-width:1.165;stroke-opacity:1"
+       id="circle4726"
+       cx="110.4467"
+       cy="101.18032"
+       r="5.4737339"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <rect
+       style="fill:#00a9cc;fill-opacity:1;stroke:#000000;stroke-width:1.02345;stroke-opacity:1"
+       id="rect4728"
+       width="30.408081"
+       height="10.767035"
+       x="45.329018"
+       y="40.177265"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="49.263603"
+       y="47.331703"
+       id="text4996"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400"><tspan
+         sodipodi:role="line"
+         id="tspan4994"
+         style="stroke-width:0.264583"
+         x="49.263603"
+         y="47.331703">HIP-Switch</tspan></text>
+    <rect
+       style="fill:#00a9cc;fill-opacity:1;stroke:#000000;stroke-width:1.02345;stroke-opacity:1"
+       id="rect5738"
+       width="30.408081"
+       height="10.767035"
+       x="94.276711"
+       y="77.282707"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="98.211296"
+       y="84.437141"
+       id="text5742"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400"><tspan
+         sodipodi:role="line"
+         id="tspan5740"
+         style="stroke-width:0.264583"
+         x="98.211296"
+         y="84.437141">HIP-Switch</tspan></text>
+    <rect
+       style="fill:#00a9cc;fill-opacity:1;stroke:#000000;stroke-width:1.02345;stroke-opacity:1"
+       id="rect5744"
+       width="30.408081"
+       height="10.767035"
+       x="140.62337"
+       y="40.299641"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="144.55794"
+       y="47.454075"
+       id="text5748"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400"><tspan
+         sodipodi:role="line"
+         id="tspan5746"
+         style="stroke-width:0.264583"
+         x="144.55794"
+         y="47.454075">HIP-Switch</tspan></text>
+    <image
+       width="63.389614"
+       height="39.121193"
+       preserveAspectRatio="none"
+       style="image-rendering:optimizeQuality"
+       xlink:href="data:image/png;base64,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 vwADAN4JA4q6c4V4AAAAAElFTkSuQmCC "
+       id="image5918"
+       x="76.976089"
+       y="22.410328"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="90.477608"
+       y="49.907578"
+       id="text6342"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400"><tspan
+         sodipodi:role="line"
+         id="tspan6340"
+         style="stroke-width:0.264583"
+         x="90.477608"
+         y="49.907578">Public Internet</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.241;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.964, 0.241;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 75.737097,45.5912 C 104.32293,41.803751 109.47468,19.963029 109.47468,19.963029 v 0"
+       id="path7392"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.229088;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.916352, 0.229088;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 139.9513,45.598156 C 114.12848,41.809679 109.47468,19.963029 109.47468,19.963029 v 0"
+       id="path7474"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="146.11629"
+       y="70.063957"
+       id="text8622"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400"><tspan
+         sodipodi:role="line"
+         id="tspan8620"
+         style="stroke-width:0.264583"
+         x="146.11629"
+         y="70.063957">SSL-protected control-plane</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.529166, 0.264583;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 109.47468,19.963029 0.11253,56.688135"
+       id="path10811"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.05833, 0.529166, 0.264583, 0.529166;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 75.73602,45.5912 c 35.84624,3.713065 33.85012,31.059964 33.85012,31.059964 v 0"
+       id="path10926"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.250565;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.00226, 0.50113, 0.250565, 0.50113;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 139.9513,45.598156 c -32.15578,3.712233 -30.36516,31.053008 -30.36516,31.053008 v 0"
+       id="path11201"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.05833, 0.529166, 0.264583, 0.529166;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 75.737097,45.5912 64.214203,0.007"
+       id="path11236"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="146.11627"
+       y="76.651161"
+       id="text11936"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400"><tspan
+         sodipodi:role="line"
+         id="tspan11934"
+         style="stroke-width:0.264583"
+         x="146.11627"
+         y="76.651161">IPSec full mesh</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.04009;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:4.16034, 2.08018, 1.04009, 2.08018;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 131.14534,75.852712 c 4.05879,0 8.11757,0 12.17636,0"
+       id="path14151"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.057;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.171, 1.057;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 131.14534,68.666665 c 4.19187,0 8.38372,0 12.57558,0"
+       id="path14235"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="146.31589"
+       y="83.437981"
+       id="text15199"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400"><tspan
+         sodipodi:role="line"
+         id="tspan15197"
+         style="stroke-width:0.264583"
+         x="146.31589"
+         y="83.437981">L2 traffic</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.865;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 110.38566,95.414728 0.19961,-7.186046"
+       id="path16186"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.865;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 182.64535,35.730621 -11.37791,9.381781 11.57752,10.180234"
+       id="path16188"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.865;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 45.312015,45.711239 33.13566,37.127907"
+       id="path16190"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.865;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 32.536823,55.691859 12.775192,-9.98062"
+       id="path16192"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.903463;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 131.32023,82.911986 h 12.35955"
+       id="path16307"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400" />
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="175.60863"
+       y="25.749065"
+       id="text16875"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400"><tspan
+         sodipodi:role="line"
+         id="tspan16873"
+         style="stroke-width:0.264583"
+         x="175.60863"
+         y="25.749065">DHCP server</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="21.371723"
+       y="25.749063"
+       id="text18109"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400"><tspan
+         sodipodi:role="line"
+         id="tspan18107"
+         style="stroke-width:0.264583"
+         x="21.371723"
+         y="25.749063">SCADA devices</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="181.01593"
+       y="65.145134"
+       id="text19733"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400"><tspan
+         sodipodi:role="line"
+         id="tspan19731"
+         style="stroke-width:0.264583"
+         x="181.01593"
+         y="65.145134">Server</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="93.726593"
+       y="114.58334"
+       id="text20565"
+       inkscape:export-filename="/Users/dmitriykuptsov/workspace/hip-vpls-controller/documentation/graphics/arch.png"
+       inkscape:export-xdpi="400"
+       inkscape:export-ydpi="400"><tspan
+         sodipodi:role="line"
+         id="tspan20563"
+         style="stroke-width:0.264583"
+         x="93.726593"
+         y="114.58334">SCADA devices</tspan></text>
+  </g>
+</svg>
