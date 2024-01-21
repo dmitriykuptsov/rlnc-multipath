@@ -78,10 +78,9 @@ def path1_recv_loop(sock):
     end_probe = -1
     while True:
         data, addr = sock.recvfrom(buffer_size)
-        print(addr)
         packet = packets.GenericPacket(data)
         if packet.get_type() == packets.TPUT_PROBE_TYPE:
-            packet = packets.TputProbe();
+            packet = packets.TputProbe(data);
             index = packet.get_index()
             if current_index < 0:
                 start_probe = time();
@@ -117,7 +116,7 @@ def path2_recv_loop(sock):
         data, addr = sock.recvfrom(buffer_size)
         packet = packets.GenericPacket(data)
         if packet.get_type() == packets.TPUT_PROBE_TYPE:
-            packet = packets.TputProbe();
+            packet = packets.TputProbe(data);
             index = packet.get_index()
             if current_index < 0:
                 start_probe = time();
