@@ -88,10 +88,10 @@ def path1_recv_loop(sock):
             if current_index != index:
                 start_probe = time();
                 current_index = index;
-                probes = 0
             probes += 1
-            logging.debug("GOT BW ESTIMATE FOR PATH 1")
-            if probes + 1 == config["general"]["bw_probe_train_size"]:
+            logging.debug("GOT BW ESTIMATE FOR PATH 1 %d " % (int(time() * 1000)))
+            if probes == config["general"]["bw_probe_train_size"]:
+                probes = 0
                 # send ack
                 end_probe = time()
                 packet = packets.TputProbeACK();
