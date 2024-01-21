@@ -70,7 +70,7 @@ TPUT_TIME_DELTA_LENGTH = 4
 class TputProbeACK(GenericPacket):
     def __init__(self, buffer = None):
         if buffer == None:
-            self.buffer = bytearray([0] * (PACKET_TYPE_LENGTH + PACKET_LENGTH_LENGTH + TPUT_INDEX_LENGTH))
+            self.buffer = bytearray([0] * (PACKET_TYPE_LENGTH + PACKET_LENGTH_LENGTH + TPUT_INDEX_LENGTH + TPUT_TIME_DELTA_LENGTH))
         else:
             self.buffer = buffer
     def get_pps(self):
