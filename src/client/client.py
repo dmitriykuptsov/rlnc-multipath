@@ -34,9 +34,10 @@ import socket
 from config import config
 from common import utils
 from packets import packets
+
 #from packets.packets import TputProbe, TputProbeACK, DataPacket, GenericPacket
 import logging
-from time import sleep
+from time import sleep, time
 
 # Configure logging to console and file
 logging.basicConfig(
@@ -54,10 +55,12 @@ general_lock = Lock()
 
 stats = {
     "path1": {
-        "bw": 0
+        "bw": 0,
+        "last": time()
     },
     "path2": {
-        "bw": 0
+        "bw": 0,
+        "last": time()
     }
 }
 
@@ -65,6 +68,11 @@ def open_socket(ip, port):
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.bind((ip, port))
     return sock
+
+def open_socket_send_only():
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    return sock
+
 
 buffer_size = config["general"]["buffer_size"]
 
@@ -80,6 +88,54 @@ path_2_source_port = config["network"]["path2"]["source_port"]
 path_2_destination_port = config["network"]["path2"]["destination_port"]
 path2_socket = open_socket(path_2_source_ip, path_2_source_port)
 
+
+path_1_data_destination_ip = config["data-plane"]["path1"]["ip"]
+path_1_data_destination_port = config["data-plane"]["path1"]["port"]
+path1_data_socket = open_socket_send_only()
+
+path_2_data_destination_ip = config["data-plane"]["path2"]["ip"]
+path_2_data_destination_port = config["data-plane"]["path2"]["port"]
+path2_data_socket = open_socket_send_only()
+
+matrix = utils.get_random_GF_matrix(config["encoder"]["generation_size"], config["encoder"]["coded_packets_size"])
+
+def is_fastest_path_1(time_in_flight1, time_in_flight2):
+    if stats["path1"]["last"] + time_in_flight1 < stats["path2"]["last"] + time_in_flight2:
+        return True
+    return False
+
+def experiment_route_data_coding(number_of_packets, gen_size, packet_size, coded_packets_size):
+    packets_ = [bytearray(os.urandom(packet_size)) for p in range(0, gen_size)];
+    coded_packets = utils.code_packets(matrix, packets_, gen_size, coded_packets_size, packet_size)
+    stats["path1"]["last"] = time()
+    stats["path2"]["last"] = time()
+    for i in range(0, number_of_packets, gen_size):
+        for k in range(0, len(coded_packets)):
+            time_in_flight1 = packet_size / stats["path1"]["bw"];
+            time_in_flight2 = packet_size / stats["path2"]["bw"];
+            if is_fastest_path_1(time_in_flight1, time_in_flight2):
+                stats["path1"]["last"] = stats["path1"]["last"] + time_in_flight1
+                codes = bytearray(matrix[k])
+                packet = packets.DataPacket()
+                packet.set_generation(i)
+                packet.set_coefs(codes)
+                packet.set_generation_size(gen_size)
+                packet.set_symbols(bytearray(coded_packets[k]))
+                packet.set_type(packets.DATA_PACKET_TYPE)
+                path1_data_socket.sendto(packet.get_buffer(), (path_1_data_destination_ip, path_1_data_destination_port))
+                # Send to the first path and update the stats
+            else:
+                # Send to the second path and update the stats
+                stats["path2"]["last"] = stats["path2"]["last"] + time_in_flight2
+                codes = bytearray(matrix[k])
+                packet = packets.DataPacket()
+                packet.set_generation(i)
+                packet.set_coefs(codes)
+                packet.set_generation_size(gen_size)
+                packet.set_symbols(bytearray(coded_packets[k]))
+                packet.set_type(packets.DATA_PACKET_TYPE)
+                path2_data_socket.sendto(packet.get_buffer(), (path_1_data_destination_ip, path_1_data_destination_port))
+                
 def path1_recv_loop(sock):
     while True:
         data, addr = sock.recvfrom(buffer_size)
@@ -152,6 +208,10 @@ path2_send_th.start()
 
 # Main loop
 while True:
-    sleep(1)
+    sleep(20)
+    experiment_route_data_coding(config["experiment"]["number_of_packets"], \
+                                 config["encoder"]["generation_size"], \
+                                    config["experiment"]["packet_size"], \
+                                    config["encoder"]["coded_packets_size"])
 
 #sock.sendto(MESSAGE, (UDP_IP, UDP_PORT))

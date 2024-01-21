@@ -71,6 +71,28 @@ path_2_source_port = config["network"]["path2"]["source_port"]
 path_2_destination_port = config["network"]["path2"]["destination_port"]
 path2_socket = open_socket(path_2_source_ip, path_2_source_port)
 
+path_1_data_destination_ip = config["data-plane"]["path1"]["ip"]
+path_1_data_destination_port = config["data-plane"]["path1"]["port"]
+path1_data_socket = open_socket(path_1_data_destination_ip, path_1_data_destination_port)
+
+path_2_data_destination_ip = config["data-plane"]["path2"]["ip"]
+path_2_data_destination_port = config["data-plane"]["path2"]["port"]
+path2_data_socket = open_socket(path_2_data_destination_ip, path_2_data_destination_port)
+
+def path1_recv_data_loop(sock):
+    while True:
+        data, addr = sock.recvfrom(buffer_size)
+        packet = packets.GenericPacket(data)
+        if packet.get_type() == packets.DATA_PACKET_TYPE:
+            logging.debug("GOT DATA PACKET ON PATH 1")
+
+def path2_recv_data_loop(sock):
+    while True:
+        data, addr = sock.recvfrom(buffer_size)
+        packet = packets.GenericPacket(data)
+        if packet.get_type() == packets.DATA_PACKET_TYPE:
+            logging.debug("GOT DATA PACKET ON PATH 2")
+
 def path1_recv_loop(sock):
     current_index = -1
     probes = 0
@@ -147,7 +169,11 @@ def path2_recv_loop(sock):
 
 path1_recv_th = threading.Thread(target = path1_recv_loop, args = (path1_socket, ), daemon = True)
 path2_recv_th = threading.Thread(target = path2_recv_loop, args = (path2_socket, ), daemon = True)
+path1_recv_data_th = threading.Thread(target = path1_recv_data_loop, args = (path1_data_socket, ), daemon=True)
+path2_recv_data_th = threading.Thread(target = path2_recv_data_loop, args = (path2_data_socket, ), daemon=True)
 
+path1_recv_data_th.start()
+path2_recv_data_th.start()
 path1_recv_th.start()
 path2_recv_th.start()
 

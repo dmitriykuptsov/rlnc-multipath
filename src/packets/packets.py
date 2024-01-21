@@ -107,7 +107,7 @@ DATA_PACKET_COEF_OFFSET = 8
 class DataPacket(GenericPacket):
     def __init__(self, buffer = None):
         if buffer == None:
-            self.buffer = bytearray([0] * (PACKET_TYPE_LENGTH + PACKET_LENGTH_LENGTH + TPUT_INDEX_LENGTH))
+            self.buffer = bytearray([0] * (PACKET_TYPE_LENGTH + PACKET_LENGTH_LENGTH + DATA_PACKET_GENERATION_LENGTH + DATA_PACKET_GENERATION_SIZE_LENGTH))
         else:
             self.buffer = buffer
     def get_generation(self):

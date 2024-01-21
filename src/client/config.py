@@ -24,12 +24,18 @@ config = {
         }
     },
     "encoder": {
-        "GF": 2**8
+        "GF": 2**8,
+        "generation_size": 10,
+        "coded_packets_size": 14
     },
     "general": {
         "bw_probe_interval_s": 10,
         "bw_probe_size_bytes": 1400,
         "bw_probe_train_size": 30,
         "buffer_size": 1400
+    },
+    "experiment": {
+        "number_of_packets": 100000,
+        "packet_size": 1300
     }
 }

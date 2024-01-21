@@ -24,7 +24,9 @@ config = {
         }
     },
     "encoder": {
-        "GF": 2**8
+        "GF": 2**8,
+        "generation_size": 10,
+        "coded_packets_size": 14
     },
     "general": {
         "bw_probe_size_bytes": 1400,
