@@ -98,6 +98,7 @@ def path1_recv_loop(sock):
                 packet.set_pps(probes)
                 packet.set_time_delta(int((end_probe - start_probe)*1000*1000))
                 logging.debug(packet.get_time_delta())
+                logging.debug("==============")
                 packet.set_type(packets.TPUT_ACK_TYPE)
                 packet.set_length(len(packet.get_buffer()))
                 logging.debug("Send probe ACK %d" % (int((end_probe - start_probe)*1000*1000)))
