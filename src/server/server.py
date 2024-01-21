@@ -128,16 +128,18 @@ def path2_recv_loop(sock):
                 probes = 0
             probes += 1
             logging.debug("GOT BW ESTIMATE FOR PATH 2")
-            if probes + 1 == config["general"]["bw_probe_train_size"]:
+            if probes == config["general"]["bw_probe_train_size"]:
                 # send ack
                 end_probe = time()
                 packet = packets.TputProbeACK();
                 packet.set_pps(probes)
                 packet.set_time_delta(int((end_probe - start_probe)*1000*1000))
+                logging.debug(packet.get_time_delta())
+                logging.debug("============== 2 =========")
                 packet.set_type(packets.TPUT_ACK_TYPE)
                 packet.set_length(len(packet.get_buffer()))
-                logging.debug("Send probe ACK %d" % (int((end_probe - start_probe)*1000*1000)))
-                logging.debug("Buffer size: 13000 bytes PATH2")
+                logging.debug("Send probe (PATH 2) ACK %d" % (int((end_probe - start_probe)*1000*1000)))
+                logging.debug("Buffer size: 13000 bytes PATH 2")
                 sock.sendto(packet.get_buffer(), (config["network"]["path2"]["destination"], config["network"]["path2"]["destination_port"]))
         else:
             logging.debug("Unknown packet type")

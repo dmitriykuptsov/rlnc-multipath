@@ -88,11 +88,7 @@ def path1_recv_loop(sock):
             packet = packets.TputProbeACK(data);
             pps = packet.get_pps()
             delta = packet.get_time_delta()
-            logging.debug("------------------")
-            logging.debug(pps)
-            logging.debug(delta)
-            logging.debug("------------------")
-            bw = pps / delta
+            bw = (pps * config["general"]["bw_probe_size_bytes"] * 8) / delta
             stats["path1"]["bw"] = bw
             logging.debug("GOT BW ESTIMATE FOR PATH 1: %f" % (bw))
         else:
@@ -106,11 +102,7 @@ def path2_recv_loop(sock):
             packet = packets.TputProbeACK(data);
             pps = packet.get_pps()
             delta = packet.get_time_delta()
-            logging.debug("------------------")
-            logging.debug(pps)
-            logging.debug(delta)
-            logging.debug("------------------")
-            bw = pps / delta
+            bw = (pps * config["general"]["bw_probe_size_bytes"] * 8) / delta
             stats["path2"]["bw"] = bw
             logging.debug("GOT BW ESTIMATE FOR PATH 2: %f" % (bw))
         else:
@@ -134,7 +126,6 @@ def path2_probe_send_loop(sock):
     index = 1
     while True:
         for i in range(0, config["general"]["bw_probe_train_size"]):
-            logging.debug("Sending probe packet to path 2")
             packet = packets.TputProbe()
             packet.set_type(packets.TPUT_PROBE_TYPE)
             packet.set_index(index)
@@ -146,7 +137,7 @@ def path2_probe_send_loop(sock):
         sleep(config["general"]["bw_probe_interval_s"])
 
 path1_recv_th = threading.Thread(target = path1_recv_loop, args = (path1_socket, ), daemon = True)
-path2_recv_th = threading.Thread(target = path1_recv_loop, args = (path1_socket, ), daemon = True)
+path2_recv_th = threading.Thread(target = path2_recv_loop, args = (path2_socket, ), daemon = True)
 
 path1_send_th = threading.Thread(target = path1_probe_send_loop, args = (path1_socket, ), daemon = True)
 path2_send_th = threading.Thread(target = path2_probe_send_loop, args = (path2_socket, ), daemon = True)
