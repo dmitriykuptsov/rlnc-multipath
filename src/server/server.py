@@ -78,6 +78,7 @@ def path1_recv_loop(sock):
     end_probe = -1
     while True:
         data, addr = sock.recvfrom(buffer_size)
+        print(addr)
         packet = packets.GenericPacket(data)
         if packet.get_type() == packets.TPUT_PROBE_TYPE:
             packet = packets.TputProbe();
@@ -142,7 +143,7 @@ def path2_recv_loop(sock):
             logging.debug("Unknown packet type")
 
 path1_recv_th = threading.Thread(target = path1_recv_loop, args = (path1_socket, ), daemon = True)
-path2_recv_th = threading.Thread(target = path1_recv_loop, args = (path1_socket, ), daemon = True)
+path2_recv_th = threading.Thread(target = path2_recv_loop, args = (path2_socket, ), daemon = True)
 
 path1_recv_th.start()
 path2_recv_th.start()
