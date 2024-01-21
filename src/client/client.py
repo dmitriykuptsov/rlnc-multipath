@@ -85,7 +85,7 @@ def path1_recv_loop(sock):
         data, addr = sock.recvfrom(buffer_size)
         packet = packets.GenericPacket(data)
         if packet.get_type() == packets.TPUT_ACK_TYPE:
-            packet = packets.TputProbeACK();
+            packet = packets.TputProbeACK(data);
             pps = packet.get_pps()
             delta = packet.get_time_delta()
             logging.debug("------------------")
@@ -103,7 +103,7 @@ def path2_recv_loop(sock):
         data, addr = sock.recvfrom(buffer_size)
         packet = packets.GenericPacket(data)
         if packet.get_type() == packets.TPUT_ACK_TYPE:
-            packet = packets.TputProbeACK();
+            packet = packets.TputProbeACK(data);
             pps = packet.get_pps()
             delta = packet.get_time_delta()
             logging.debug("------------------")
@@ -134,6 +134,7 @@ def path2_probe_send_loop(sock):
     index = 1
     while True:
         for i in range(0, config["general"]["bw_probe_train_size"]):
+            logging.debug("Sending probe packet to path 2")
             packet = packets.TputProbe()
             packet.set_type(packets.TPUT_PROBE_TYPE)
             packet.set_index(index)
