@@ -88,6 +88,7 @@ def path1_recv_loop(sock):
             if current_index != index:
                 start_probe = time();
                 current_index = index;
+                probes = 0
             probes += 1
             logging.debug("GOT BW ESTIMATE FOR PATH 1 %d %d" % (int(time() * 1000), probes))
             if probes == config["general"]["bw_probe_train_size"]:
