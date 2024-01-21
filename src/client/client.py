@@ -88,6 +88,10 @@ def path1_recv_loop(sock):
             packet = packets.TputProbeACK();
             pps = packet.get_pps()
             delta = packet.get_time_delta()
+            logging.debug("------------------")
+            logging.debug(pps)
+            logging.debug(delta)
+            logging.debug("------------------")
             bw = pps / delta
             stats["path1"]["bw"] = bw
             logging.debug("GOT BW ESTIMATE FOR PATH 1: %f" % (bw))
@@ -102,6 +106,10 @@ def path2_recv_loop(sock):
             packet = packets.TputProbeACK();
             pps = packet.get_pps()
             delta = packet.get_time_delta()
+            logging.debug("------------------")
+            logging.debug(pps)
+            logging.debug(delta)
+            logging.debug("------------------")
             bw = pps / delta
             stats["path2"]["bw"] = bw
             logging.debug("GOT BW ESTIMATE FOR PATH 2: %f" % (bw))
