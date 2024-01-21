@@ -13,13 +13,23 @@ config = {
             "destination_port": 10012
         }
     },
+    "data-plane": {
+        "path1": {
+            "ip": "1.1.1.2",
+            "port": 10003
+        },
+        "path2": {
+            "ip": "192.168.1.3",
+            "port": 10003
+        }
+    },
     "encoder": {
         "GF": 2**8
     },
     "general": {
         "bw_probe_interval_s": 10,
-        "bw_probe_size_bytes": 1300,
-        "bw_probe_train_size": 10,
+        "bw_probe_size_bytes": 1400,
+        "bw_probe_train_size": 30,
         "buffer_size": 1400
     }
 }

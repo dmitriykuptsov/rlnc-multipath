@@ -88,7 +88,8 @@ def path1_recv_loop(sock):
             packet = packets.TputProbeACK(data);
             pps = packet.get_pps()
             delta = packet.get_time_delta()
-            bw = (pps * config["general"]["bw_probe_size_bytes"] * 8) / delta
+            logging.debug("PATH 1: pps %d delta %d" % (pps, delta))
+            bw = (pps * config["general"]["bw_probe_size_bytes"] * 8) / delta * 1000 * 1000
             stats["path1"]["bw"] = bw
             logging.debug("GOT BW ESTIMATE FOR PATH 1: %f" % (bw))
         else:
@@ -102,7 +103,8 @@ def path2_recv_loop(sock):
             packet = packets.TputProbeACK(data);
             pps = packet.get_pps()
             delta = packet.get_time_delta()
-            bw = (pps * config["general"]["bw_probe_size_bytes"] * 8) / delta
+            logging.debug("PATH 2: pps %d delta %d" % (pps, delta))
+            bw = (pps * config["general"]["bw_probe_size_bytes"] * 8) / delta * 1000 * 1000
             stats["path2"]["bw"] = bw
             logging.debug("GOT BW ESTIMATE FOR PATH 2: %f" % (bw))
         else:
