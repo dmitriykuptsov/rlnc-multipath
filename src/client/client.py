@@ -34,7 +34,7 @@ import socket
 from config import config
 from common import utils
 from packets import packets
-from packets.packets import TputProbe, TputProbeACK, DataPacket, GenericPacket
+#from packets.packets import TputProbe, TputProbeACK, DataPacket, GenericPacket
 import logging
 from time import sleep
 
@@ -43,7 +43,7 @@ logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s [%(levelname)s] %(message)s",
     handlers=[
-        logging.FileHandler("hipls.log"),
+        logging.FileHandler("rlnc-client.log"),
         logging.StreamHandler(sys.stdout)
     ]
 );
@@ -83,9 +83,9 @@ path2_socket = open_socket(path_2_source_ip, path_2_source_port)
 def path1_recv_loop(sock):
     while True:
         data, addr = sock.recvfrom(buffer_size)
-        packet = GenericPacket(data)
+        packet = packets.GenericPacket(data)
         if packet.get_type() == packets.TPUT_ACK_TYPE:
-            packet = TputProbeACK();
+            packet = packets.TputProbeACK();
             pps = packet.get_pps()
             delta = packet.get_time_delta()
             bw = pps / delta
@@ -97,9 +97,9 @@ def path1_recv_loop(sock):
 def path2_recv_loop(sock):
     while True:
         data, addr = sock.recvfrom(buffer_size)
-        packet = GenericPacket(data)
+        packet = packets.GenericPacket(data)
         if packet.get_type() == packets.TPUT_ACK_TYPE:
-            packet = TputProbeACK();
+            packet = packets.TputProbeACK();
             pps = packet.get_pps()
             delta = packet.get_time_delta()
             bw = pps / delta
@@ -112,7 +112,7 @@ def path1_probe_send_loop(sock):
     index = 1
     while True:
         for i in range(0, config["general"]["bw_probe_train_size"]):
-            packet = TputProbe()
+            packet = packets.TputProbe()
             packet.set_type(packets.TPUT_PROBE_TYPE)
             packet.set_index(index)
             payload = bytearray(os.urandom(config["general"]["bw_probe_size_bytes"]))
@@ -126,7 +126,7 @@ def path2_probe_send_loop(sock):
     index = 1
     while True:
         for i in range(0, config["general"]["bw_probe_train_size"]):
-            packet = TputProbe()
+            packet = packets.TputProbe()
             packet.set_type(packets.TPUT_PROBE_TYPE)
             packet.set_index(index)
             payload = bytearray(os.urandom(config["general"]["bw_probe_size_bytes"]))

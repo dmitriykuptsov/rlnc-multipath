@@ -32,8 +32,7 @@ import os
 import socket
 from config import config
 import common
-import packets
-from packets.packets import TputProbe, TputProbeACK, DataPacket, GenericPacket
+from packets import packets
 import logging
 from time import sleep, time
 import threading
@@ -79,9 +78,9 @@ def path1_recv_loop(sock):
     end_probe = -1
     while True:
         data, addr = sock.recvfrom(buffer_size)
-        packet = GenericPacket(data)
+        packet = packets.GenericPacket(data)
         if packet.get_type() == packets.TPUT_PROBE_TYPE:
-            packet = TputProbe();
+            packet = packets.TputProbe();
             index = packet.get_index()
             if current_index < 0:
                 start_probe = time();
@@ -95,7 +94,7 @@ def path1_recv_loop(sock):
             if probes == config["general"]["bw_probe_train_size"]:
                 # send ack
                 end_probe = time()
-                packet = TputProbeACK();
+                packet = packets.TputProbeACK();
                 packet.set_pps(probes)
                 packet.set_time_delta(int((end_probe - start_probe)*1000*1000))
                 packet.set_type(packets.TPUT_ACK_TYPE)
@@ -113,9 +112,9 @@ def path2_recv_loop(sock):
     end_probe = -1
     while True:
         data, addr = sock.recvfrom(buffer_size)
-        packet = GenericPacket(data)
+        packet = packets.GenericPacket(data)
         if packet.get_type() == packets.TPUT_PROBE_TYPE:
-            packet = TputProbe();
+            packet = packets.TputProbe();
             index = packet.get_index()
             if current_index < 0:
                 start_probe = time();
@@ -129,7 +128,7 @@ def path2_recv_loop(sock):
             if probes == config["general"]["bw_probe_train_size"]:
                 # send ack
                 end_probe = time()
-                packet = TputProbeACK();
+                packet = packets.TputProbeACK();
                 packet.set_pps(probes)
                 packet.set_time_delta(int((end_probe - start_probe)*1000*1000))
                 packet.set_type(packets.TPUT_ACK_TYPE)
