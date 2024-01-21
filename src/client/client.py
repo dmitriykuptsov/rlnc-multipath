@@ -113,6 +113,7 @@ def experiment_route_data_coding(number_of_packets, gen_size, packet_size, coded
         for k in range(0, len(coded_packets)):
             time_in_flight1 = packet_size / stats["path1"]["bw"];
             time_in_flight2 = packet_size / stats["path2"]["bw"];
+            logging.debug("TIME IN FLIGHT 1 %f 2 %f" % (time_in_flight1, time_in_flight2, ))
             if is_fastest_path_1(time_in_flight1, time_in_flight2):
                 stats["path1"]["last"] = stats["path1"]["last"] + time_in_flight1
                 codes = bytearray(matrix[k])
@@ -134,7 +135,7 @@ def experiment_route_data_coding(number_of_packets, gen_size, packet_size, coded
                 packet.set_generation_size(gen_size)
                 packet.set_symbols(bytearray(coded_packets[k]))
                 packet.set_type(packets.DATA_PACKET_TYPE)
-                path2_data_socket.sendto(packet.get_buffer(), (path_1_data_destination_ip, path_1_data_destination_port))
+                path2_data_socket.sendto(packet.get_buffer(), (path_2_data_destination_ip, path_2_data_destination_port))
                 
 def path1_recv_loop(sock):
     while True:
@@ -207,9 +208,9 @@ path1_send_th.start()
 path2_send_th.start()
 
 # Main loop
-while True:
-    sleep(20)
-    experiment_route_data_coding(config["experiment"]["number_of_packets"], \
+#while True:
+sleep(20)
+experiment_route_data_coding(config["experiment"]["number_of_packets"], \
                                  config["encoder"]["generation_size"], \
                                     config["experiment"]["packet_size"], \
                                     config["encoder"]["coded_packets_size"])
