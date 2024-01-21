@@ -91,7 +91,7 @@ def path1_recv_loop(sock):
                 probes = 0
             probes += 1
             logging.debug("GOT BW ESTIMATE FOR PATH 1")
-            if probes == config["general"]["bw_probe_train_size"]:
+            if probes + 1 == config["general"]["bw_probe_train_size"]:
                 # send ack
                 end_probe = time()
                 packet = packets.TputProbeACK();
@@ -127,7 +127,7 @@ def path2_recv_loop(sock):
                 probes = 0
             probes += 1
             logging.debug("GOT BW ESTIMATE FOR PATH 2")
-            if probes == config["general"]["bw_probe_train_size"]:
+            if probes + 1 == config["general"]["bw_probe_train_size"]:
                 # send ack
                 end_probe = time()
                 packet = packets.TputProbeACK();
