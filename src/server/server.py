@@ -101,7 +101,7 @@ def path1_recv_loop(sock):
                 packet.set_length(len(packet.get_buffer()))
                 logging.debug("Send probe ACK %d" % (int((end_probe - start_probe)*1000*1000)))
                 logging.debug("Buffer size: 13000 bytes")
-                sock.send(packet.get_buffer(), (config["network"]["path1"]["destination"], config["network"]["path1"]["destination_port"]))
+                sock.sendto(packet.get_buffer(), (config["network"]["path1"]["destination"], config["network"]["path1"]["destination_port"]))
         else:
             logging.debug("Unknown packet type")
 
@@ -135,7 +135,7 @@ def path2_recv_loop(sock):
                 packet.set_length(len(packet.get_buffer()))
                 logging.debug("Send probe ACK %d" % (int((end_probe - start_probe)*1000*1000)))
                 logging.debug("Buffer size: 13000 bytes")
-                sock.send(packet.get_buffer(), (config["network"]["path2"]["destination"], config["network"]["path2"]["destination_port"]))
+                sock.sendto(packet.get_buffer(), (config["network"]["path2"]["destination"], config["network"]["path2"]["destination_port"]))
         else:
             logging.debug("Unknown packet type")
 
