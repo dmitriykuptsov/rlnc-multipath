@@ -29,7 +29,8 @@ config = {
         "coded_packets_size": 14
     },
     "experiment": {
-        "number_of_packets": 100
+        "number_of_packets": 100,
+        "packet_size": 1300
     },
     "general": {
         "bw_probe_size_bytes": 1400,
