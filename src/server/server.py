@@ -78,10 +78,12 @@ path2_socket = open_socket(path_2_source_ip, path_2_source_port)
 path_1_data_destination_ip = config["data-plane"]["path1"]["ip"]
 path_1_data_destination_port = config["data-plane"]["path1"]["port"]
 path1_data_socket = open_socket(path_1_data_destination_ip, path_1_data_destination_port)
+path1_data_socket.setsockopt(socket.SOL_SOCKET,socket.SO_RCVBUF, 2000*1300)
 
 path_2_data_destination_ip = config["data-plane"]["path2"]["ip"]
 path_2_data_destination_port = config["data-plane"]["path2"]["port"]
 path2_data_socket = open_socket(path_2_data_destination_ip, path_2_data_destination_port)
+path2_data_socket.setsockopt(socket.SOL_SOCKET,socket.SO_RCVBUF, 2000*1300)
 
 def process_loop():
     packet_size = config["experiment"]["packet_size"]
@@ -89,8 +91,15 @@ def process_loop():
     gen_size = config["encoder"]["generation_size"]
     current_gen_index = 1
     packets_prcessed = 0
+    timeout = 1
+    start = time()
     logging.info("Starting process loop....")
-    while True:
+    while current_gen_index <= num_packets / gen_size:
+        if (time() - start) > timeout:
+            start = time()
+            current_gen_index += 1;
+            logging.info("SKIPPING THE GENERATION....")
+            continue;
         if recieved_data.get(current_gen_index, None):
             if len(recieved_data.get(current_gen_index)) >= gen_size:
                 logging.info("DOING %d GENERATION INDEX" % (current_gen_index))
@@ -103,12 +112,42 @@ def process_loop():
                     counter += 1
                     matrix.append(bytearray(packet.get_coefs()))
                     packets_.append(bytearray(packet.get_symbols()))
+                start = time()
                 matrix = utils.get_GF_matrix(matrix)
-                decoded_packets = utils.decode_packets(matrix, packets_, gen_size, packet_size)
+                try:
+                    decoded_packets = utils.decode_packets(matrix, packets_, gen_size, packet_size)
+                except:
+                    logging.critical("FAILED TO DECODE THE PACKETS")
+                    pass
+                end = time()
+                print("DECODED IN %f seconds" % (end-start))
+                #for packet in decoded_packets:
+                #    print(hexlify(bytearray(packet)))
                 packets_prcessed += gen_size
                 current_gen_index += 1
+                start = time()
         if packets_prcessed >= num_packets:
             break;
+        pass
+
+def process_regular_loop():
+    num_packets = config["experiment"]["number_of_packets"]
+    current_packet_sequence = 1
+    packets_prcessed = 0
+    timeout = 0.1
+    start = time()
+    logging.info("Starting process loop....")
+    while current_packet_sequence <= num_packets:
+        if (time() - start) > timeout:
+            start = time()
+            current_packet_sequence += 1;
+            logging.info("SKIPPING THE PACKET....")
+            continue;
+        if recieved_data.get(current_packet_sequence, None):
+            logging.info("DOING PACKET %d" % (current_packet_sequence, ))
+            current_packet_sequence += 1
+            start = time()
+
         pass
 
 def path1_recv_data_loop(sock):
@@ -120,6 +159,9 @@ def path1_recv_data_loop(sock):
             if not recieved_data.get(packet.get_generation(), None):
                 recieved_data[packet.get_generation()] = []
             recieved_data[packet.get_generation()].append(packet)
+        elif packet.get_type() == packets.GENERIC_DATA_PACKET_TYPE:
+            packet = packets.RegularDataPacket(data)
+            recieved_data[packet.get_sequence()] = packet
 
 def path2_recv_data_loop(sock):
     while True:
@@ -130,6 +172,9 @@ def path2_recv_data_loop(sock):
             if not recieved_data.get(packet.get_generation(), None):
                 recieved_data[packet.get_generation()] = []                
             recieved_data[packet.get_generation()].append(packet)
+        elif packet.get_type() == packets.GENERIC_DATA_PACKET_TYPE:
+            packet = packets.RegularDataPacket(data)
+            recieved_data[packet.get_sequence()] = packet
 
 def path1_recv_loop(sock):
     current_index = -1
@@ -199,14 +244,19 @@ path1_recv_data_th = threading.Thread(target = path1_recv_data_loop, args = (pat
 path2_recv_data_th = threading.Thread(target = path2_recv_data_loop, args = (path2_data_socket, ), daemon=True)
 
 
-decode_loop_th = threading.Thread(target = process_loop, args = ( ), daemon = True)
+#decode_loop_th = threading.Thread(target = process_loop, args = ( ), daemon = True)
 
 path1_recv_data_th.start()
 path2_recv_data_th.start()
 path1_recv_th.start()
 path2_recv_th.start()
-decode_loop_th.start()
+#decode_loop_th.start()
 
 # Main loop
-while True:
-    sleep(1)
+#while True:
+
+sleep(20)
+if config["experiment"]["type"] == "RNLC":
+    process_loop()
+else:
+    process_regular_loop()

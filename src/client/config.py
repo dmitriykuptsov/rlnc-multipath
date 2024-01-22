@@ -29,13 +29,14 @@ config = {
         "coded_packets_size": 10
     },
     "general": {
-        "bw_probe_interval_s": 10,
+        "bw_probe_interval_s": 1,
         "bw_probe_size_bytes": 1400,
         "bw_probe_train_size": 30,
         "buffer_size": 1400
     },
     "experiment": {
-        "number_of_packets": 10,
-        "packet_size": 50
+        "number_of_packets": 10000,
+        "packet_size": 100,
+        "type": "RNLC"
     }
 }

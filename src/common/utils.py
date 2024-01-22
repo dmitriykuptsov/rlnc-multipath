@@ -10,7 +10,7 @@ def get_random_GF_matrix(n, m):
     for i in range(0, m):
         matrix.append([])
         for j in range(0, n):
-            matrix[i].append(int(random.uniform(1, 255)))
+            matrix[i].append(int(random.uniform(1, 256)))
     return gf(matrix)
 
 def get_GF_array(a):
@@ -29,44 +29,22 @@ def code_packets(matrix, packets, gen_size, coded_packets_size, packet_size):
     output_packets = []
     coded_packets_ = []
     for i in range(0, coded_packets_size):
-        #coded_packets.append([])
         coded_packets_.append([])
-    for i in range(0, packet_size):
-        a = []
-        for j in range(0, gen_size):
-            a.append(packets[j][i])
-        output_packets.append(a)
+    output_packets = np.transpose(packets)
     output_packets = get_GF_array(output_packets)
     for i in range(0, packet_size):
         codes = np.dot(matrix, np.transpose(output_packets[i]))
-        #coded_packets[j].append(codes)
         for j in range(0, coded_packets_size):
             coded_packets_[j].append(codes[j])
     return coded_packets_
 
 def decode_packets(matrix, packets, gen_size, packet_size):
-    #print("----------------- FINDING INVERSE -------------------- ")
-    #print(matrix)
-
     matrix_ = np.linalg.inv(gf(matrix))
-    #print("++++++++++++++++++ INVERSE +++++++++++++++++++++++++++")
-    #print(matrix_)
     matrix = matrix_
     output_packets = []
     coded_packets_ = []
-    for i in range(0, gen_size):
-        #coded_packets.append([])
-        coded_packets_.append([])
-    for i in range(0, packet_size):
-        a = []
-        for j in range(0, gen_size):
-            a.append(packets[j][i])
-        output_packets.append(a)
-    output_packets = get_GF_array(output_packets)
-    for i in range(0, packet_size):
-        codes = np.dot(matrix, np.transpose(output_packets[i]))
-        #coded_packets[j].append(codes)
-        for j in range(0, gen_size):
-            coded_packets_[j].append(codes[j])
-    return coded_packets_
+    output_packets = np.transpose(packets)
+    codes = np.dot(matrix, np.transpose(output_packets))
+    coded_packets_.append(codes)
+    return np.transpose(coded_packets_)
     

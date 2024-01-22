@@ -93,10 +93,12 @@ path2_socket = open_socket(path_2_source_ip, path_2_source_port)
 path_1_data_destination_ip = config["data-plane"]["path1"]["ip"]
 path_1_data_destination_port = config["data-plane"]["path1"]["port"]
 path1_data_socket = open_socket_send_only()
+path1_data_socket.setsockopt(socket.SOL_SOCKET,socket.SO_SNDBUF, 2000*1300)
 
 path_2_data_destination_ip = config["data-plane"]["path2"]["ip"]
 path_2_data_destination_port = config["data-plane"]["path2"]["port"]
 path2_data_socket = open_socket_send_only()
+path2_data_socket.setsockopt(socket.SOL_SOCKET,socket.SO_SNDBUF, 2000*1300)
 
 matrix = utils.get_random_GF_matrix(config["encoder"]["generation_size"], config["encoder"]["coded_packets_size"])
 
@@ -113,7 +115,14 @@ def experiment_route_data_coding(number_of_packets, gen_size, packet_size, coded
     for i in range(0, number_of_packets, gen_size):
         generation += 1
         packets_ = [bytearray(os.urandom(packet_size)) for p in range(0, gen_size)];
-        coded_packets = utils.code_packets(matrix, packets_, gen_size, coded_packets_size, packet_size)        
+        #for packet in packets_:
+        #    print(hexlify(packet))
+        start = time()
+        coded_packets = utils.code_packets(matrix, packets_, gen_size, coded_packets_size, packet_size)
+        end = time()
+        print("ENCODED IN %f second" % (end-start))
+        sleep_time = (coded_packets_size * packet_size * 8) / (stats["path1"]["bw"] + stats["path2"]["bw"])
+        start = time()
         for k in range(0, coded_packets_size):
             time_in_flight1 = packet_size / stats["path1"]["bw"];
             time_in_flight2 = packet_size / stats["path2"]["bw"];
@@ -140,7 +149,39 @@ def experiment_route_data_coding(number_of_packets, gen_size, packet_size, coded
                 logging.debug(bytearray(coded_packets[k]))
                 packet.set_symbols(bytearray(coded_packets[k]))
                 path2_data_socket.sendto(packet.get_buffer(), (path_2_data_destination_ip, path_2_data_destination_port))
+        end = time()
+        #if (end - start < sleep_time):
+        logging.info("DOING GENERATION %d AND SLEEPING %f" % (generation - 1, sleep_time))
+        sleep(sleep_time)
 
+def experiment_route_data_nocoding(number_of_packets, packet_size):
+    
+    stats["path1"]["last"] = time()
+    stats["path2"]["last"] = time()
+    
+    for sequence in range(1, number_of_packets + 1):
+        data = bytearray(os.urandom(packet_size));
+        sleep_time = (packet_size * 8) / (stats["path1"]["bw"] + stats["path2"]["bw"])
+        time_in_flight1 = packet_size / stats["path1"]["bw"];
+        time_in_flight2 = packet_size / stats["path2"]["bw"];
+        if is_fastest_path_1(time_in_flight1, time_in_flight2):
+            stats["path1"]["last"] = stats["path1"]["last"] + time_in_flight1
+            packet = packets.RegularDataPacket()
+            packet.set_type(packets.GENERIC_DATA_PACKET_TYPE)
+            packet.set_sequence(sequence)
+            packet.set_payload(data)
+            path1_data_socket.sendto(packet.get_buffer(), (path_1_data_destination_ip, path_1_data_destination_port))
+            # Send to the first path and update the stats
+        else:
+            # Send to the second path and update the stats
+            stats["path2"]["last"] = stats["path2"]["last"] + time_in_flight2
+            packet = packets.RegularDataPacket()
+            packet.set_type(packets.GENERIC_DATA_PACKET_TYPE)
+            packet.set_sequence(sequence)
+            packet.set_payload(data)
+            path2_data_socket.sendto(packet.get_buffer(), (path_2_data_destination_ip, path_2_data_destination_port))
+        logging.info("DOING PACKET %d AND SLEEPING %f" % (sequence, sleep_time))
+        sleep(sleep_time)
 
 def experiment_route_data_nocoding(number_of_packets, packet_size):
     
@@ -235,12 +276,14 @@ path2_recv_th.start()
 path1_send_th.start()
 path2_send_th.start()
 
-# Main loop
-#while True:
 sleep(20)
-experiment_route_data_coding(config["experiment"]["number_of_packets"], \
+if config["experiment"]["type"] == "RNLC":
+    experiment_route_data_coding(config["experiment"]["number_of_packets"], \
                                  config["encoder"]["generation_size"], \
                                     config["experiment"]["packet_size"], \
                                     config["encoder"]["coded_packets_size"])
-
-#sock.sendto(MESSAGE, (UDP_IP, UDP_PORT))
+else:
+    experiment_route_data_nocoding(config["experiment"]["number_of_packets"], \
+                                config["experiment"]["packet_size"])
+while True:
+    sleep(1)
