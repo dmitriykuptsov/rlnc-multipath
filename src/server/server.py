@@ -84,9 +84,12 @@ path_2_data_destination_ip = config["data-plane"]["path2"]["ip"]
 path_2_data_destination_port = config["data-plane"]["path2"]["port"]
 path2_data_socket = open_socket(path_2_data_destination_ip, path_2_data_destination_port)
 
-def process_loop(gen_size):
+def process_loop():
     packet_size = config["experiment"]["packet_size"]
+    num_packets = config["experiment"]["number_of_packets"]
+    gen_size = config["encoder"]["generation_size"]
     current_gen_index = 0
+    packets_prcessed = 0
     while True:
         if recieved_data.get(current_gen_index, None):
             if len(recieved_data.get(current_gen_index)) >= gen_size:
@@ -104,6 +107,9 @@ def process_loop(gen_size):
                 decoded_packets = utils.decode_packets(matrix, packets_, gen_size, len(packets_), packet_size)
                 for packet in decoded_packets:
                     logging.debug(hexlify(packet))
+                packets_prcessed += gen_size
+        if packets_prcessed >= num_packets:
+            break;
         pass
 
 def path1_recv_data_loop(sock):
@@ -159,7 +165,7 @@ def path1_recv_loop(sock):
                 current_index = index;
                 probes = 0
             probes += 1
-            logging.debug("GOT BW ESTIMATE FOR PATH 1 %d %d" % (int(time() * 1000), probes))
+            #logging.debug("GOT BW ESTIMATE FOR PATH 1 %d %d" % (int(time() * 1000), probes))
             if probes == config["general"]["bw_probe_train_size"]:
                 
                 # send ack
@@ -168,12 +174,12 @@ def path1_recv_loop(sock):
                 packet.set_pps(probes)
                 
                 packet.set_time_delta(int((end_probe - start_probe)*1000*1000))
-                logging.debug(packet.get_time_delta())
-                logging.debug("==============")
+                #logging.debug(packet.get_time_delta())
+                #logging.debug("==============")
                 packet.set_type(packets.TPUT_ACK_TYPE)
                 packet.set_length(len(packet.get_buffer()))
-                logging.debug("Send probe ACK %d" % (int((end_probe - start_probe)*1000*1000)))
-                logging.debug("Buffer size: 13000 bytes PATH 1")
+                #logging.debug("Send probe ACK %d" % (int((end_probe - start_probe)*1000*1000)))
+                #logging.debug("Buffer size: 13000 bytes PATH 1")
                 sock.sendto(packet.get_buffer(), (config["network"]["path1"]["destination"], config["network"]["path1"]["destination_port"]))
         else:
             logging.debug("Unknown packet type")
@@ -197,19 +203,19 @@ def path2_recv_loop(sock):
                 current_index = index;
                 probes = 0
             probes += 1
-            logging.debug("GOT BW ESTIMATE FOR PATH 2")
+            #logging.debug("GOT BW ESTIMATE FOR PATH 2")
             if probes == config["general"]["bw_probe_train_size"]:
                 # send ack
                 end_probe = time()
                 packet = packets.TputProbeACK();
                 packet.set_pps(probes)
                 packet.set_time_delta(int((end_probe - start_probe)*1000*1000))
-                logging.debug(packet.get_time_delta())
-                logging.debug("============== 2 =========")
+                #logging.debug(packet.get_time_delta())
+                #logging.debug("============== 2 =========")
                 packet.set_type(packets.TPUT_ACK_TYPE)
                 packet.set_length(len(packet.get_buffer()))
-                logging.debug("Send probe (PATH 2) ACK %d" % (int((end_probe - start_probe)*1000*1000)))
-                logging.debug("Buffer size: 13000 bytes PATH 2")
+                #logging.debug("Send probe (PATH 2) ACK %d" % (int((end_probe - start_probe)*1000*1000)))
+                #logging.debug("Buffer size: 13000 bytes PATH 2")
                 sock.sendto(packet.get_buffer(), (config["network"]["path2"]["destination"], config["network"]["path2"]["destination_port"]))
         else:
             logging.debug("Unknown packet type")
@@ -219,10 +225,14 @@ path2_recv_th = threading.Thread(target = path2_recv_loop, args = (path2_socket,
 path1_recv_data_th = threading.Thread(target = path1_recv_data_loop, args = (path1_data_socket, ), daemon=True)
 path2_recv_data_th = threading.Thread(target = path2_recv_data_loop, args = (path2_data_socket, ), daemon=True)
 
+
+decode_loop_th = threading.Thread(target = process_loop, args = ( ), daemon = True)
+
 path1_recv_data_th.start()
 path2_recv_data_th.start()
 path1_recv_th.start()
 path2_recv_th.start()
+decode_loop_th.start()
 
 # Main loop
 while True:
