@@ -90,6 +90,7 @@ def process_loop():
     gen_size = config["encoder"]["generation_size"]
     current_gen_index = 0
     packets_prcessed = 0
+    logging.debug("Starting process loop....")
     while True:
         if recieved_data.get(current_gen_index, None):
             if len(recieved_data.get(current_gen_index)) >= gen_size:
@@ -124,11 +125,11 @@ def path1_recv_data_loop(sock):
             #logging.debug(packet.get_symbols())
             #logging.debug("PATH 1 GENERATION %d TIMESTAMP %f" % (packet.get_generation(), time()))
 
-            general_lock.acquire()
+            #general_lock.acquire()
             if not recieved_data.get(packet.get_generation(), None):
                 recieved_data[packet.get_generation()] = []
             recieved_data[packet.get_generation()].append(packet)
-            general_lock.release()
+            #general_lock.release()
 
 def path2_recv_data_loop(sock):
     while True:
@@ -139,12 +140,12 @@ def path2_recv_data_loop(sock):
             #logging.debug(packet.get_coefs())
             #logging.debug(packet.get_symbols())
             #logging.debug("PATH 2 GENERATION %d TIMESTAMP %f" % (packet.get_generation(), time()))
-            general_lock.acquire()
+            #general_lock.acquire()
             if not recieved_data.get(packet.get_generation(), None):
                 recieved_data[packet.get_generation()] = []
                 
             recieved_data[packet.get_generation()].append(packet)            
-            general_lock.release()
+            #general_lock.release()
 
 def path1_recv_loop(sock):
     current_index = -1
