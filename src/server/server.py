@@ -89,11 +89,11 @@ def process_loop():
     gen_size = config["encoder"]["generation_size"]
     current_gen_index = 1
     packets_prcessed = 0
-    logging.debug("Starting process loop....")
+    logging.info("Starting process loop....")
     while True:
         if recieved_data.get(current_gen_index, None):
             if len(recieved_data.get(current_gen_index)) >= gen_size:
-                logging.debug("DOING %d GENERATION INDEX" % (current_gen_index))
+                logging.info("DOING %d GENERATION INDEX" % (current_gen_index))
                 matrix = []
                 packets_ = []
                 counter = 0

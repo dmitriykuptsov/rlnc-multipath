@@ -25,12 +25,12 @@ config = {
     },
     "encoder": {
         "GF": 2**8,
-        "generation_size": 10,
-        "coded_packets_size": 14
+        "generation_size": 5,
+        "coded_packets_size": 10
     },
     "experiment": {
-        "number_of_packets": 100,
-        "packet_size": 1300
+        "number_of_packets": 10,
+        "packet_size": 50
     },
     "general": {
         "bw_probe_size_bytes": 1400,
