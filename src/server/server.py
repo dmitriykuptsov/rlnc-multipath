@@ -88,12 +88,13 @@ def process_loop():
     packet_size = config["experiment"]["packet_size"]
     num_packets = config["experiment"]["number_of_packets"]
     gen_size = config["encoder"]["generation_size"]
-    current_gen_index = 0
+    current_gen_index = 1
     packets_prcessed = 0
     logging.debug("Starting process loop....")
     while True:
         if recieved_data.get(current_gen_index, None):
             if len(recieved_data.get(current_gen_index)) >= gen_size:
+                logging.debug("DOING %d GENERATION INDEX" % (current_gen_index))
                 current_gen_index += 1
                 matrix = []
                 packets_ = []
