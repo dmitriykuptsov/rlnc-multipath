@@ -87,6 +87,8 @@ def path1_recv_data_loop(sock):
         if packet.get_type() == packets.DATA_PACKET_TYPE:
             #logging.debug("GOT DATA PACKET ON PATH 1")
             packet = packets.DataPacket(data)
+            logging.debug(packet.get_coefs())
+            logging.debug(packet.get_symbols())
             logging.debug("PATH 1 GENERATION %d TIMESTAMP %f" % (packet.get_generation(), time()))
 
 def path2_recv_data_loop(sock):
@@ -94,6 +96,9 @@ def path2_recv_data_loop(sock):
         data, addr = sock.recvfrom(buffer_size)
         packet = packets.GenericPacket(data)
         if packet.get_type() == packets.DATA_PACKET_TYPE:
+            packet = packets.DataPacket(data)
+            logging.debug(packet.get_coefs())
+            logging.debug(packet.get_symbols())
             logging.debug("PATH 2 GENERATION %d TIMESTAMP %f" % (packet.get_generation(), time()))
 
 def path1_recv_loop(sock):
