@@ -44,4 +44,25 @@ def code_packets(matrix, packets, gen_size, coded_packets_size, packet_size):
         for j in range(0, coded_packets_size):
             coded_packets_[j].append(codes[j])
     return coded_packets_
+
+def decode_packets(matrix, packets, gen_size, coded_packets_size, packet_size):
+    matrix = find_inverse_matrix(matrix)
+    output_packets = []
+    coded_packets = []
+    coded_packets_ = []
+    for i in range(0, coded_packets_size):
+        coded_packets.append([])
+        coded_packets_.append([])
+    for i in range(0, packet_size):
+        a = []
+        for j in range(0, gen_size):
+            a.append(packets[j][i])
+        output_packets.append(a)
+    output_packets = get_GF_array(output_packets)
+    for i in range(0, packet_size):
+        codes = np.dot(matrix, np.transpose(output_packets[i]))
+        coded_packets[j].append(codes)
+        for j in range(0, coded_packets_size):
+            coded_packets_[j].append(codes[j])
+    return coded_packets_
     

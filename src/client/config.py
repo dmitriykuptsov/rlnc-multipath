@@ -35,7 +35,7 @@ config = {
         "buffer_size": 1400
     },
     "experiment": {
-        "number_of_packets": 100000,
+        "number_of_packets": 100,
         "packet_size": 1300
     }
 }

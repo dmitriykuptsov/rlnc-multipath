@@ -28,6 +28,9 @@ config = {
         "generation_size": 10,
         "coded_packets_size": 14
     },
+    "experiment": {
+        "number_of_packets": 100
+    },
     "general": {
         "bw_probe_size_bytes": 1400,
         "bw_probe_train_size": 30,

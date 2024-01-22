@@ -32,6 +32,7 @@ import os
 import socket
 from config import config
 import common
+from common import utils
 from packets import packets
 import logging
 from time import sleep, time
@@ -52,6 +53,9 @@ from threading import Lock
 
 general_lock = Lock()
 
+recieved_data = {}
+recieved_timestamp = {}
+app_timestamp = {}
 
 def open_socket(ip, port):
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -80,6 +84,28 @@ path_2_data_destination_ip = config["data-plane"]["path2"]["ip"]
 path_2_data_destination_port = config["data-plane"]["path2"]["port"]
 path2_data_socket = open_socket(path_2_data_destination_ip, path_2_data_destination_port)
 
+def process_loop(gen_size):
+    packet_size = config["experiment"]["packet_size"]
+    current_gen_index = 0
+    while True:
+        if recieved_data.get(current_gen_index, None):
+            if len(recieved_data.get(current_gen_index)) >= gen_size:
+                current_gen_index += 1
+                matrix = []
+                packets_ = []
+                counter = 0
+                for packet in recieved_data[current_gen_index]:
+                    if counter == gen_size:
+                        break;
+                    counter += 1
+                    matrix.append(packet.get_coefs())
+                    packets_.append(packet.get_symbols())
+                matrix = utils.get_GF_matrix(matrix)
+                decoded_packets = utils.decode_packets(matrix, packets_, gen_size, len(packets_), packet_size)
+                for packet in decoded_packets:
+                    logging.debug(hexlify(packet))
+        pass
+
 def path1_recv_data_loop(sock):
     while True:
         data, addr = sock.recvfrom(buffer_size)
@@ -87,9 +113,16 @@ def path1_recv_data_loop(sock):
         if packet.get_type() == packets.DATA_PACKET_TYPE:
             #logging.debug("GOT DATA PACKET ON PATH 1")
             packet = packets.DataPacket(data)
-            logging.debug(packet.get_coefs())
-            logging.debug(packet.get_symbols())
-            logging.debug("PATH 1 GENERATION %d TIMESTAMP %f" % (packet.get_generation(), time()))
+            
+            #logging.debug(packet.get_coefs())
+            #logging.debug(packet.get_symbols())
+            #logging.debug("PATH 1 GENERATION %d TIMESTAMP %f" % (packet.get_generation(), time()))
+
+            general_lock.acquire()
+            if not recieved_data.get(packet.get_generation(), None):
+                recieved_data[packet.get_generation()] = []
+            recieved_data[packet.get_generation()].append(packet)
+            general_lock.release()
 
 def path2_recv_data_loop(sock):
     while True:
@@ -97,9 +130,15 @@ def path2_recv_data_loop(sock):
         packet = packets.GenericPacket(data)
         if packet.get_type() == packets.DATA_PACKET_TYPE:
             packet = packets.DataPacket(data)
-            logging.debug(packet.get_coefs())
-            logging.debug(packet.get_symbols())
-            logging.debug("PATH 2 GENERATION %d TIMESTAMP %f" % (packet.get_generation(), time()))
+            #logging.debug(packet.get_coefs())
+            #logging.debug(packet.get_symbols())
+            #logging.debug("PATH 2 GENERATION %d TIMESTAMP %f" % (packet.get_generation(), time()))
+            general_lock.acquire()
+            if not recieved_data.get(packet.get_generation(), None):
+                recieved_data[packet.get_generation()] = []
+                
+            recieved_data[packet.get_generation()].append(packet)            
+            general_lock.release()
 
 def path1_recv_loop(sock):
     current_index = -1
