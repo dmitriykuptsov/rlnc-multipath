@@ -95,7 +95,6 @@ def process_loop():
         if recieved_data.get(current_gen_index, None):
             if len(recieved_data.get(current_gen_index)) >= gen_size:
                 logging.debug("DOING %d GENERATION INDEX" % (current_gen_index))
-                current_gen_index += 1
                 matrix = []
                 packets_ = []
                 counter = 0
@@ -110,6 +109,7 @@ def process_loop():
                 for packet in decoded_packets:
                     logging.debug(hexlify(packet))
                 packets_prcessed += gen_size
+                current_gen_index += 1
         if packets_prcessed >= num_packets:
             break;
         pass
