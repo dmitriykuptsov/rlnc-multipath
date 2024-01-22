@@ -27,7 +27,6 @@ __status__ = "development"
 import sys
 import os
 sys.path.append(os.getcwd())
-
 import os
 import socket
 from config import config
@@ -41,7 +40,7 @@ from binascii import hexlify
 
 # Configure logging to console and file
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
     handlers=[
         logging.FileHandler("rlnc-server.log"),
@@ -105,9 +104,7 @@ def process_loop():
                     matrix.append(bytearray(packet.get_coefs()))
                     packets_.append(bytearray(packet.get_symbols()))
                 matrix = utils.get_GF_matrix(matrix)
-                decoded_packets = utils.decode_packets(matrix, packets_, gen_size, len(packets_), packet_size)
-                for packet in decoded_packets:
-                    logging.debug(hexlify(packet))
+                decoded_packets = utils.decode_packets(matrix, packets_, gen_size, packet_size)
                 packets_prcessed += gen_size
                 current_gen_index += 1
         if packets_prcessed >= num_packets:
@@ -119,18 +116,10 @@ def path1_recv_data_loop(sock):
         data, addr = sock.recvfrom(buffer_size)
         packet = packets.GenericPacket(data)
         if packet.get_type() == packets.DATA_PACKET_TYPE:
-            #logging.debug("GOT DATA PACKET ON PATH 1")
             packet = packets.DataPacket(data)
-            
-            #logging.debug(packet.get_coefs())
-            #logging.debug(packet.get_symbols())
-            #logging.debug("PATH 1 GENERATION %d TIMESTAMP %f" % (packet.get_generation(), time()))
-
-            #general_lock.acquire()
             if not recieved_data.get(packet.get_generation(), None):
                 recieved_data[packet.get_generation()] = []
             recieved_data[packet.get_generation()].append(packet)
-            #general_lock.release()
 
 def path2_recv_data_loop(sock):
     while True:
@@ -138,15 +127,9 @@ def path2_recv_data_loop(sock):
         packet = packets.GenericPacket(data)
         if packet.get_type() == packets.DATA_PACKET_TYPE:
             packet = packets.DataPacket(data)
-            #logging.debug(packet.get_coefs())
-            #logging.debug(packet.get_symbols())
-            #logging.debug("PATH 2 GENERATION %d TIMESTAMP %f" % (packet.get_generation(), time()))
-            #general_lock.acquire()
             if not recieved_data.get(packet.get_generation(), None):
-                recieved_data[packet.get_generation()] = []
-                
-            recieved_data[packet.get_generation()].append(packet)            
-            #general_lock.release()
+                recieved_data[packet.get_generation()] = []                
+            recieved_data[packet.get_generation()].append(packet)
 
 def path1_recv_loop(sock):
     current_index = -1
@@ -167,21 +150,14 @@ def path1_recv_loop(sock):
                 current_index = index;
                 probes = 0
             probes += 1
-            #logging.debug("GOT BW ESTIMATE FOR PATH 1 %d %d" % (int(time() * 1000), probes))
             if probes == config["general"]["bw_probe_train_size"]:
-                
                 # send ack
                 end_probe = time()
                 packet = packets.TputProbeACK();
                 packet.set_pps(probes)
-                
                 packet.set_time_delta(int((end_probe - start_probe)*1000*1000))
-                #logging.debug(packet.get_time_delta())
-                #logging.debug("==============")
                 packet.set_type(packets.TPUT_ACK_TYPE)
                 packet.set_length(len(packet.get_buffer()))
-                #logging.debug("Send probe ACK %d" % (int((end_probe - start_probe)*1000*1000)))
-                #logging.debug("Buffer size: 13000 bytes PATH 1")
                 sock.sendto(packet.get_buffer(), (config["network"]["path1"]["destination"], config["network"]["path1"]["destination_port"]))
         else:
             logging.debug("Unknown packet type")
@@ -205,19 +181,14 @@ def path2_recv_loop(sock):
                 current_index = index;
                 probes = 0
             probes += 1
-            #logging.debug("GOT BW ESTIMATE FOR PATH 2")
             if probes == config["general"]["bw_probe_train_size"]:
                 # send ack
                 end_probe = time()
                 packet = packets.TputProbeACK();
                 packet.set_pps(probes)
                 packet.set_time_delta(int((end_probe - start_probe)*1000*1000))
-                #logging.debug(packet.get_time_delta())
-                #logging.debug("============== 2 =========")
                 packet.set_type(packets.TPUT_ACK_TYPE)
                 packet.set_length(len(packet.get_buffer()))
-                #logging.debug("Send probe (PATH 2) ACK %d" % (int((end_probe - start_probe)*1000*1000)))
-                #logging.debug("Buffer size: 13000 bytes PATH 2")
                 sock.sendto(packet.get_buffer(), (config["network"]["path2"]["destination"], config["network"]["path2"]["destination_port"]))
         else:
             logging.debug("Unknown packet type")

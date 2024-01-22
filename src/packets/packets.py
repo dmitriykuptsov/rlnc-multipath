@@ -148,3 +148,33 @@ class DataPacket(GenericPacket):
         size = self.get_generation_size()
         self.buffer[DATA_PACKET_COEF_OFFSET + size:DATA_PACKET_COEF_OFFSET + size + len(symbols)] = bytearray([0]*len(symbols))
         self.buffer[DATA_PACKET_COEF_OFFSET + size:DATA_PACKET_COEF_OFFSET + size + len(symbols)] = symbols
+
+
+GENERIC_DATA_PACKET_TYPE = 4
+GENERIC_DATA_PACKET_SEQUENCE_OFFSET = 8
+GENERIC_DATA_PACKET_SEQUENCE_LENGTH = 4
+GENERIC_DATA_PACKET_PAYLOAD_OFFSET = 12
+
+class RegularDataPacket(GenericPacket):
+    def __init__(self, buffer = None):
+        if buffer == None:
+            self.buffer = bytearray([0] * (PACKET_TYPE_LENGTH + PACKET_LENGTH_LENGTH + DATA_PACKET_GENERATION_LENGTH + DATA_PACKET_GENERATION_SIZE_LENGTH))
+        else:
+            self.buffer = buffer
+    def get_sequence(self):
+        seq = (self.buffer[GENERIC_DATA_PACKET_SEQUENCE_OFFSET] << 24)
+        seq |= (self.buffer[GENERIC_DATA_PACKET_SEQUENCE_OFFSET + 1] << 16)
+        seq |= (self.buffer[GENERIC_DATA_PACKET_SEQUENCE_OFFSET + 2] << 8)
+        seq |= (self.buffer[GENERIC_DATA_PACKET_SEQUENCE_OFFSET + 3])
+        return seq
+    def set_sequence(self, seq):
+        self.buffer[GENERIC_DATA_PACKET_SEQUENCE_OFFSET] = (seq >> 24) & 0xFF
+        self.buffer[GENERIC_DATA_PACKET_SEQUENCE_OFFSET + 1] = (seq >> 16) & 0xFF
+        self.buffer[GENERIC_DATA_PACKET_SEQUENCE_OFFSET + 2] = (seq >> 8) & 0xFF
+        self.buffer[GENERIC_DATA_PACKET_SEQUENCE_OFFSET + 3] = (seq >> 0) & 0xFF
+    
+    def get_payload(self):
+        return self.buffer[GENERIC_DATA_PACKET_PAYLOAD_OFFSET:]
+    
+    def set_payload(self, payload):
+       self.buffer[GENERIC_DATA_PACKET_PAYLOAD_OFFSET:] = payload

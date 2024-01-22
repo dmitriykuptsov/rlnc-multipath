@@ -25,8 +25,8 @@ config = {
     },
     "encoder": {
         "GF": 2**8,
-        "generation_size": 10,
-        "coded_packets_size": 14
+        "generation_size": 5,
+        "coded_packets_size": 10
     },
     "general": {
         "bw_probe_interval_s": 10,
@@ -35,7 +35,7 @@ config = {
         "buffer_size": 1400
     },
     "experiment": {
-        "number_of_packets": 100,
+        "number_of_packets": 100000,
         "packet_size": 1300
     }
 }

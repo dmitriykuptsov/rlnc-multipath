@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# Copyright (C) 2022 strangebit
+# Copyright (C) 2024 strangebit
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ from time import sleep, time
 
 # Configure logging to console and file
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
     handlers=[
         logging.FileHandler("rlnc-client.log"),
@@ -106,53 +106,69 @@ def is_fastest_path_1(time_in_flight1, time_in_flight2):
     return False
 
 def experiment_route_data_coding(number_of_packets, gen_size, packet_size, coded_packets_size):
-    packets_ = [bytearray(os.urandom(packet_size)) for p in range(0, gen_size)];
-    coded_packets = utils.code_packets(matrix, packets_, gen_size, coded_packets_size, packet_size)
-    for packet in packets_:
-        logging.debug(hexlify(packet));
+    
     stats["path1"]["last"] = time()
     stats["path2"]["last"] = time()
     generation = 0
     for i in range(0, number_of_packets, gen_size):
         generation += 1
-        for k in range(0, len(coded_packets)):
+        packets_ = [bytearray(os.urandom(packet_size)) for p in range(0, gen_size)];
+        coded_packets = utils.code_packets(matrix, packets_, gen_size, coded_packets_size, packet_size)        
+        for k in range(0, coded_packets_size):
             time_in_flight1 = packet_size / stats["path1"]["bw"];
             time_in_flight2 = packet_size / stats["path2"]["bw"];
-            #logging.debug("TIME IN FLIGHT 1 %f 2 %f" % (time_in_flight1, time_in_flight2, ))
             if is_fastest_path_1(time_in_flight1, time_in_flight2):
                 stats["path1"]["last"] = stats["path1"]["last"] + time_in_flight1
                 codes = bytearray(matrix[k])
                 packet = packets.DataPacket()
-                
-                #logging.debug("PATH 1 GENERATION %d" % generation)
                 packet.set_type(packets.DATA_PACKET_TYPE)
                 packet.set_generation(generation)
-                #logging.debug(bytearray(codes))
-                #logging.debug(bytearray(coded_packets[k]))
                 packet.set_generation_size(gen_size)
                 packet.set_coefs(bytearray(codes))
                 packet.set_symbols(bytearray(coded_packets[k]))
-                #logging.debug("PATH 1 GENERATION %d" % packet.get_generation())
-                #logging.debug("=----------------------=")
                 path1_data_socket.sendto(packet.get_buffer(), (path_1_data_destination_ip, path_1_data_destination_port))
                 # Send to the first path and update the stats
             else:
                 # Send to the second path and update the stats
-                #logging.debug("PATH 1 GENERATION %d" % generation)
                 stats["path2"]["last"] = stats["path2"]["last"] + time_in_flight2
                 codes = bytearray(matrix[k])
                 packet = packets.DataPacket()
                 packet.set_type(packets.DATA_PACKET_TYPE)
                 packet.set_generation(generation)
-                #logging.debug(bytearray(codes))
-                #logging.debug(bytearray(coded_packets[k]))
                 packet.set_generation_size(gen_size)
                 packet.set_coefs(bytearray(codes))
+                logging.debug(bytearray(coded_packets[k]))
                 packet.set_symbols(bytearray(coded_packets[k]))
-                #logging.debug("=+++++++++++++++=")
-                #logging.debug("PATH 2 GENERATION %d" % packet.get_generation())
                 path2_data_socket.sendto(packet.get_buffer(), (path_2_data_destination_ip, path_2_data_destination_port))
-                
+
+
+def experiment_route_data_nocoding(number_of_packets, packet_size):
+    
+    stats["path1"]["last"] = time()
+    stats["path2"]["last"] = time()
+    generation = 0
+    for i in range(0, number_of_packets):
+        generation += 1
+        packet_ = bytearray(os.urandom(packet_size));
+        time_in_flight1 = packet_size / stats["path1"]["bw"];
+        time_in_flight2 = packet_size / stats["path2"]["bw"];
+        if is_fastest_path_1(time_in_flight1, time_in_flight2):
+            stats["path1"]["last"] = stats["path1"]["last"] + time_in_flight1
+            packet = packets.RegularDataPacket()
+            packet.set_type(packets.DATA_PACKET_TYPE)
+            packet.set_sequence(i)
+            packet.set_payload(packet_)
+            path1_data_socket.sendto(packet.get_buffer(), (path_1_data_destination_ip, path_1_data_destination_port))
+            # Send to the first path and update the stats
+        else:
+            stats["path2"]["last"] = stats["path2"]["last"] + time_in_flight1
+            packet = packets.RegularDataPacket()
+            packet.set_type(packets.DATA_PACKET_TYPE)
+            packet.set_sequence(i)
+            packet.set_payload(packet_)
+            path1_data_socket.sendto(packet.get_buffer(), (path_2_data_destination_ip, path_2_data_destination_port))
+
+
 def path1_recv_loop(sock):
     while True:
         data, addr = sock.recvfrom(buffer_size)
@@ -161,10 +177,8 @@ def path1_recv_loop(sock):
             packet = packets.TputProbeACK(data);
             pps = packet.get_pps()
             delta = packet.get_time_delta()
-            #logging.debug("PATH 1: pps %d delta %d" % (pps, delta))
             bw = (pps * config["general"]["bw_probe_size_bytes"] * 8) / delta * 1000 * 1000
             stats["path1"]["bw"] = bw
-            #logging.debug("GOT BW ESTIMATE FOR PATH 1: %f" % (bw))
         else:
             logging.debug("Unknown packet type")
 
@@ -176,10 +190,8 @@ def path2_recv_loop(sock):
             packet = packets.TputProbeACK(data);
             pps = packet.get_pps()
             delta = packet.get_time_delta()
-            #logging.debug("PATH 2: pps %d delta %d" % (pps, delta))
             bw = (pps * config["general"]["bw_probe_size_bytes"] * 8) / delta * 1000 * 1000
             stats["path2"]["bw"] = bw
-            #logging.debug("GOT BW ESTIMATE FOR PATH 2: %f" % (bw))
         else:
             logging.debug("Unknown packet type")
 
