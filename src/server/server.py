@@ -103,8 +103,8 @@ def process_loop():
                     if counter == gen_size:
                         break;
                     counter += 1
-                    matrix.append(packet.get_coefs())
-                    packets_.append(packet.get_symbols())
+                    matrix.append(bytearray(packet.get_coefs()))
+                    packets_.append(bytearray(packet.get_symbols()))
                 matrix = utils.get_GF_matrix(matrix)
                 decoded_packets = utils.decode_packets(matrix, packets_, gen_size, len(packets_), packet_size)
                 for packet in decoded_packets:
