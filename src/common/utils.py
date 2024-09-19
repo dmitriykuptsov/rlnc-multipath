@@ -1,6 +1,8 @@
 import numpy as np
 import galois
 import random 
+from time import time
+import logging
 
 FIELD_ELEMENTS = [i for i in range(1, 256)]
 gf=galois.GF(2**8)
@@ -39,12 +41,9 @@ def code_packets(matrix, packets, gen_size, coded_packets_size, packet_size):
     return coded_packets_
 
 def decode_packets(matrix, packets, gen_size, packet_size):
-    matrix_ = np.linalg.inv(gf(matrix))
-    matrix = matrix_
-    output_packets = []
+    matrix = np.linalg.inv(gf(matrix))
     coded_packets_ = []
-    output_packets = np.transpose(packets)
-    codes = np.dot(matrix, np.transpose(output_packets))
+    codes = np.dot(matrix, packets)
     coded_packets_.append(codes)
     return np.transpose(coded_packets_)
     
